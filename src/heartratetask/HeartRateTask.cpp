@@ -178,7 +178,8 @@ void HeartRateTask::HandleBackgroundWaiting() {
 }
 
 void HeartRateTask::HandleSensorData(int* lastBpm) {
-  int8_t ambient = ppg.Preprocess(heartRateSensor.ReadHrs(), heartRateSensor.ReadAls());
+  auto sensorData = heartRateSensor.ReadHrsAls();
+  int8_t ambient = ppg.Preprocess(sensorData.hrs, sensorData.als);
   int bpm = ppg.HeartRate();
 
   // If ambient light detected or a reset requested (bpm < 0)
